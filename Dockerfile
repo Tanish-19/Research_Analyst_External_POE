@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=legalbot:latest
+ARG BASE_IMAGE=python:3.11-slim
 FROM ${BASE_IMAGE}
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -9,11 +9,13 @@ WORKDIR /app
 
 COPY requirements.txt /app/requirements.txt
 
-RUN pip install --no-cache-dir pypdf beautifulsoup4
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app/ /app/app/
 COPY tests/ /app/tests/
 COPY streamlit_app.py /app/streamlit_app.py
+COPY PROJECT_OVERVIEW.md /app/PROJECT_OVERVIEW.md
+COPY README.md /app/README.md
 
 EXPOSE 8000 8501
 

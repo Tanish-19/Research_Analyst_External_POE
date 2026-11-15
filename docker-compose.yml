@@ -12,6 +12,9 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./PROJECT_OVERVIEW.md:/app/PROJECT_OVERVIEW.md
     env_file:
       - .env
     environment:
@@ -34,6 +37,10 @@ services:
     restart: unless-stopped
     ports:
       - "8501:8501"
+    volumes:
+      - ./app:/app/app
+      - ./streamlit_app.py:/app/streamlit_app.py
+      - ./PROJECT_OVERVIEW.md:/app/PROJECT_OVERVIEW.md
     env_file:
       - .env
     healthcheck:

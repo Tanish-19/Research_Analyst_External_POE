@@ -9,7 +9,6 @@ __pycache__/
 .vscode/
 .idea/
 .env
-*.md
 DOCKER_LAB_GUIDE.*
 .DS_Store
 Thumbs.db

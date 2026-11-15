@@ -11,8 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitBtn = document.getElementById("submitBtn");
   const clearBtn = document.getElementById("clearBtn");
   const copyBtn = document.getElementById("copyBtn");
+  const downloadMdBtn = document.getElementById("downloadMdBtn");
   const printBtn = document.getElementById("printBtn");
   const memoTimestamp = document.getElementById("memoTimestamp");
+  const memoStats = document.getElementById("memoStats");
+  const themeToggleBtn = document.getElementById("themeToggleBtn");
 
   // System Status Elements
   const systemStatus = document.getElementById("systemStatus");
@@ -288,10 +291,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Download Markdown (.md) Button
+  if (downloadMdBtn) {
+    downloadMdBtn.addEventListener("click", () => {
+      if (!latestReportRaw) return;
+      const blob = new Blob([latestReportRaw], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Research_Memorandum_${Date.now()}.md`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }
+
   // Print Report Button
   if (printBtn) {
     printBtn.addEventListener("click", () => {
       window.print();
+    });
+  }
+
+  // Theme Toggle (Dark / Light)
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "dark";
+      const nextTheme = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", nextTheme);
+      localStorage.setItem("ra_theme", nextTheme);
     });
   }
 
@@ -701,6 +730,9 @@ document.addEventListener("DOMContentLoaded", () => {
     responseView.style.display = view === "response" ? "block" : "none";
 
     copyBtn.style.display = view === "response" ? "inline-flex" : "none";
+    if (downloadMdBtn) {
+      downloadMdBtn.style.display = view === "response" ? "inline-flex" : "none";
+    }
     if (printBtn) {
       printBtn.style.display = view === "response" ? "inline-flex" : "none";
     }
@@ -729,6 +761,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderReport(markdown) {
     answerArticle.innerHTML = parseMarkdownToHTML(markdown);
+
+    if (memoStats && markdown) {
+      const words = markdown.trim().split(/\s+/).filter(Boolean).length;
+      const mins = Math.max(1, Math.round(words / 200));
+      memoStats.textContent = `⏱️ ~${mins} min read (${words} words)`;
+      memoStats.style.display = "inline-flex";
+    }
 
     // Attach click listener to report figures to open in Lightbox
     answerArticle.querySelectorAll(".report-figure").forEach((fig) => {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/style.css?v=3.4">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('ra_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <link rel="stylesheet" href="/static/style.css?v=3.5">
 </head>
 <body>
 
@@ -35,6 +41,22 @@
           <span id="statusLabel">Checking engine...</span>
         </div>
         <span class="model-tag" id="modelTag">Agno &bull; Multi-Agent</span>
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Dark/Light Mode" aria-label="Toggle Dark/Light Mode">
+          <svg class="sun-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
       </div>
     </div>
   </header>
@@ -42,8 +64,8 @@
   <!-- Research Notice Bar -->
   <div class="disclaimer-strip">
     <div class="disclaimer-strip-inner">
-      <span class="alert-icon">💡</span>
-      <span><strong>Research Intelligence System:</strong> Synthesizes empirical datasets, peer-reviewed benchmarks, and industry whitepapers. All claims are audited by the Analysis &amp; Verification Agent.</span>
+      <span class="alert-icon">⚡</span>
+      <span class="disclaimer-text"><strong>Multi-Agent Intelligence Architecture:</strong> Synthesizes empirical datasets, peer-reviewed benchmarks, and whitepapers. All claims are audited by the Analysis &amp; Verification Agent.</span>
     </div>
   </div>
 
@@ -184,16 +206,20 @@
               <div class="suggestions-label">Curated Research Topics:</div>
               <div class="suggestions-list">
                 <button type="button" class="suggestion-chip" data-query="Evaluate multi-agent coordination architectures, LLM reasoning benchmarks, and hallucination reduction vs single-prompt models.">
-                  🤖 Multi-Agent LLM Benchmarks
+                  <span class="chip-label">🤖 Multi-Agent LLM Benchmarks</span>
+                  <span class="chip-tag">AI &bull; LLM</span>
                 </button>
                 <button type="button" class="suggestion-chip" data-query="Analyze global grid-scale battery storage (BESS) dynamics, LCOE parity with gas peakers, and LFP vs Sodium-ion chemistry transitions.">
-                  ⚡ Grid Storage &amp; BESS Dynamics
+                  <span class="chip-label">⚡ Grid Storage &amp; BESS Dynamics</span>
+                  <span class="chip-tag">CleanTech</span>
                 </button>
                 <button type="button" class="suggestion-chip" data-query="Assess quantum computing fault-tolerance timelines, Shor's algorithm threat horizon, and NIST post-quantum cryptography (FIPS 203/204/205) migration.">
-                  ⚛️ Post-Quantum Cryptography &amp; NIST
+                  <span class="chip-label">⚛️ Post-Quantum Cryptography &amp; NIST</span>
+                  <span class="chip-tag">Security</span>
                 </button>
                 <button type="button" class="suggestion-chip" data-query="Examine 2nm Gate-All-Around (GAA) nanosheets, TSMC CoWoS advanced packaging bottlenecks, and thermal cooling requirements in AI accelerators.">
-                  🔬 2nm GAA &amp; CoWoS Packaging
+                  <span class="chip-label">🔬 2nm GAA &amp; CoWoS Packaging</span>
+                  <span class="chip-tag">Hardware</span>
                 </button>
               </div>
             </div>
@@ -219,24 +245,42 @@
           </div>
 
           <div class="pipeline-track">
-            <div class="pipeline-step" id="pipe1">
-              <div class="step-indicator">1</div>
+            <div class="pipeline-step step-research" id="pipe1">
+              <div class="step-indicator">
+                <span class="step-num">1</span>
+                <span class="step-icon">🔍</span>
+              </div>
               <div class="step-body">
-                <div class="step-title">Agent 1: Research Agent</div>
+                <div class="step-header-row">
+                  <div class="step-title">Agent 1: Research Agent</div>
+                  <span class="step-role-pill">Search &amp; Gather</span>
+                </div>
                 <div class="step-desc">Searches and gathers empirical data, literature, and knowledge benchmarks.</div>
               </div>
             </div>
-            <div class="pipeline-step" id="pipe2">
-              <div class="step-indicator">2</div>
+            <div class="pipeline-step step-analysis" id="pipe2">
+              <div class="step-indicator">
+                <span class="step-num">2</span>
+                <span class="step-icon">🛡️</span>
+              </div>
               <div class="step-body">
-                <div class="step-title">Agent 2: Analysis &amp; Verification Agent</div>
+                <div class="step-header-row">
+                  <div class="step-title">Agent 2: Analysis &amp; Verification Agent</div>
+                  <span class="step-role-pill">Audit &amp; Insights</span>
+                </div>
                 <div class="step-desc">Analyzes evidence, validates claims, eliminates bias, and identifies insights.</div>
               </div>
             </div>
-            <div class="pipeline-step" id="pipe3">
-              <div class="step-indicator">3</div>
+            <div class="pipeline-step step-report" id="pipe3">
+              <div class="step-indicator">
+                <span class="step-num">3</span>
+                <span class="step-icon">📑</span>
+              </div>
               <div class="step-body">
-                <div class="step-title">Agent 3: Report Generation Agent</div>
+                <div class="step-header-row">
+                  <div class="step-title">Agent 3: Report Generation Agent</div>
+                  <span class="step-role-pill">Synthesize &amp; Format</span>
+                </div>
                 <div class="step-desc">Produces the final, structured, publication-ready research report.</div>
               </div>
             </div>
@@ -259,6 +303,14 @@
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                 </svg>
                 <span>Copy</span>
+              </button>
+              <button type="button" id="downloadMdBtn" class="btn btn-outline btn-sm" style="display: none;" title="Download Markdown (.md)">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Download .md</span>
               </button>
               <button type="button" id="printBtn" class="btn btn-outline btn-sm" style="display: none;" title="Print or save as PDF">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -311,8 +363,14 @@
           <!-- Verified Response Content -->
           <div id="responseView" style="display: none;">
             <div class="memo-header-meta">
-              <span class="meta-label">Verified Analysis</span>
-              <span class="meta-date" id="memoTimestamp"></span>
+              <div class="memo-meta-left">
+                <span class="meta-label">Verified Analysis</span>
+                <span class="meta-date" id="memoTimestamp"></span>
+              </div>
+              <div class="memo-meta-right">
+                <span class="meta-stats" id="memoStats" style="display: none;"></span>
+                <span class="meta-badge-audit">Audited &bull; 3 Agents</span>
+              </div>
             </div>
 
             <!-- Consulted Grounding Sources -->
